@@ -49,7 +49,10 @@ class UdacityClient: NSObject {
                 return
             }
             // Cut first five charachters of data (Udacity needs)
-             let newData = data.subdata(in : Range(5...Int(data.count)))
+            // let newData = data.subdata(in : Range(5...Int(data.count)))
+            let range = Range(5..<data.count)
+            let newData = data.subdata(in: range) /* subset response data! */
+            print(String(data: newData, encoding: .utf8)!)
             
             // Parse data, getting account key
             self.convertDataWithCompletionHandler(data: newData) { (result, error) in
