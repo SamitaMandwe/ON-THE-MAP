@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -156,42 +157,48 @@
                     </mapView>
                     <navigationItem key="navigationItem" id="xjc-yM-Epz">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="Pin" style="plain" id="iui-C4-dkH">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="iXQ-E4-v03">
-                                <rect key="frame" x="16" y="6" width="86" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="Pin"/>
-                                <connections>
-                                    <action selector="addPin:" destination="HVO-Tb-KQe" eventType="touchUpInside" id="tcU-yc-fQ3"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                        <view key="titleView" contentMode="scaleToFill" id="HoP-a6-2As">
-                            <rect key="frame" x="108" y="6" width="175" height="32"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IUx-rU-RWO">
-                                    <rect key="frame" x="0.0" y="0.0" width="175" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="On The Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S3Z-Cl-6yD">
-                                            <rect key="frame" x="0.0" y="0.0" width="167" height="40"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </view>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="refresh" id="QBz-Qy-8K7">
+                        <barButtonItem key="leftBarButtonItem" title="LogOut" id="7hb-7i-C35">
                             <connections>
-                                <action selector="refreshButton:" destination="HVO-Tb-KQe" id="p9a-dc-pCh"/>
+                                <action selector="logOut:" destination="HVO-Tb-KQe" id="Bx6-zg-GFt"/>
                             </connections>
                         </barButtonItem>
+                        <view key="titleView" contentMode="scaleToFill" id="HoP-a6-2As">
+                            <rect key="frame" x="132.5" y="6" width="110" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On The Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S3Z-Cl-6yD">
+                                    <rect key="frame" x="8" y="4" width="94" height="24"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                    <color key="shadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="S3Z-Cl-6yD" firstAttribute="centerX" secondItem="HoP-a6-2As" secondAttribute="centerX" id="USI-Fw-j4l"/>
+                                <constraint firstItem="S3Z-Cl-6yD" firstAttribute="centerY" secondItem="HoP-a6-2As" secondAttribute="centerY" id="gen-2r-elv"/>
+                                <constraint firstItem="S3Z-Cl-6yD" firstAttribute="top" secondItem="HoP-a6-2As" secondAttribute="top" constant="4" id="tHE-cX-KYB"/>
+                            </constraints>
+                        </view>
+                        <rightBarButtonItems>
+                            <barButtonItem style="plain" systemItem="refresh" id="QBz-Qy-8K7">
+                                <connections>
+                                    <action selector="refreshButton:" destination="HVO-Tb-KQe" id="p9a-dc-pCh"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="Pin" style="plain" id="iui-C4-dkH">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="iXQ-E4-v03">
+                                    <rect key="frame" x="290" y="6" width="32" height="32"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="Pin"/>
+                                    <connections>
+                                        <action selector="addPin:" destination="HVO-Tb-KQe" eventType="touchUpInside" id="tcU-yc-fQ3"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="zrN-Zk-fkX" id="mmB-bB-WaY"/>
@@ -243,37 +250,40 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="zg7-gF-z6y">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="Pin" id="5pI-xo-0zV">
+                        <barButtonItem key="leftBarButtonItem" title="LogOut" id="saJ-uZ-11e">
                             <connections>
-                                <action selector="addPin:" destination="jx3-sX-AMp" id="VVh-p0-fG3"/>
+                                <action selector="logOut:" destination="jx3-sX-AMp" id="7Xf-IT-G4O"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="DTs-DS-rKa">
-                            <rect key="frame" x="89" y="6" width="197" height="32"/>
+                            <rect key="frame" x="130.5" y="6" width="114" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4pF-nJ-cIo">
-                                    <rect key="frame" x="0.0" y="-8" width="197" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="On The Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewM-15-E1r">
-                                            <rect key="frame" x="8" y="8" width="172" height="32"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On The Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewM-15-E1r">
+                                    <rect key="frame" x="10" y="6" width="94" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="ewM-15-E1r" firstAttribute="centerX" secondItem="DTs-DS-rKa" secondAttribute="centerX" id="XWL-Sf-BRB"/>
+                                <constraint firstItem="ewM-15-E1r" firstAttribute="centerY" secondItem="DTs-DS-rKa" secondAttribute="centerY" id="kFe-VG-yKf"/>
+                            </constraints>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="gnw-Bg-8bO">
-                            <connections>
-                                <action selector="refreshButton:" destination="jx3-sX-AMp" id="orK-Dk-JNV"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="gnw-Bg-8bO">
+                                <connections>
+                                    <action selector="refreshButton:" destination="jx3-sX-AMp" id="orK-Dk-JNV"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="Pin" style="plain" id="5pI-xo-0zV">
+                                <connections>
+                                    <action selector="addPin:" destination="jx3-sX-AMp" id="VVh-p0-fG3"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="studentsTableView" destination="rnB-Kq-mTC" id="Gbb-Ir-CqD"/>
@@ -347,6 +357,9 @@
                                     <action selector="cancelButton:" destination="FLK-RM-zcE" eventType="touchUpInside" id="VI2-68-rQ5"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NEn-KB-ZG8">
+                                <rect key="frame" x="177" y="413" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.0066460503469999996" green="0.7004394531" blue="0.89360894099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -355,6 +368,7 @@
                             <constraint firstItem="k8h-z7-iga" firstAttribute="top" secondItem="wdc-Vt-LI6" secondAttribute="top" constant="221" id="2SC-yp-e2Z"/>
                             <constraint firstItem="oOF-CT-Upx" firstAttribute="leading" secondItem="EaT-UP-Jiz" secondAttribute="leading" id="5mp-ey-tIU"/>
                             <constraint firstItem="TDN-8o-NMx" firstAttribute="top" secondItem="oOF-CT-Upx" secondAttribute="bottom" constant="8" symbolic="YES" id="6mi-I0-QvW"/>
+                            <constraint firstItem="NEn-KB-ZG8" firstAttribute="centerX" secondItem="TDN-8o-NMx" secondAttribute="centerX" id="8bc-3n-dOH"/>
                             <constraint firstItem="RJN-8q-EhQ" firstAttribute="leading" secondItem="EaT-UP-Jiz" secondAttribute="leading" id="GK0-XM-gr6"/>
                             <constraint firstItem="TDN-8o-NMx" firstAttribute="leading" secondItem="oOF-CT-Upx" secondAttribute="leading" id="HQ8-w5-B4U"/>
                             <constraint firstItem="RJN-8q-EhQ" firstAttribute="bottom" secondItem="EaT-UP-Jiz" secondAttribute="bottom" id="Isd-IM-v6r"/>
@@ -363,6 +377,7 @@
                             <constraint firstItem="k8h-z7-iga" firstAttribute="leading" secondItem="4nB-Mg-mpm" secondAttribute="leading" id="P5U-ZA-F0j"/>
                             <constraint firstItem="CkS-iI-Qpe" firstAttribute="trailing" secondItem="EaT-UP-Jiz" secondAttribute="trailing" id="P9g-CN-4U0"/>
                             <constraint firstItem="RJN-8q-EhQ" firstAttribute="top" secondItem="k8h-z7-iga" secondAttribute="bottom" constant="8" symbolic="YES" id="Sv4-9C-Ef5"/>
+                            <constraint firstItem="NEn-KB-ZG8" firstAttribute="centerY" secondItem="k8h-z7-iga" secondAttribute="centerY" id="Tah-Cx-Xxd"/>
                             <constraint firstItem="TDN-8o-NMx" firstAttribute="trailing" secondItem="oOF-CT-Upx" secondAttribute="trailing" id="V9J-lB-21d"/>
                             <constraint firstItem="TDN-8o-NMx" firstAttribute="leading" secondItem="k8h-z7-iga" secondAttribute="leading" id="YP3-3g-Qpy"/>
                             <constraint firstItem="k8h-z7-iga" firstAttribute="top" secondItem="TDN-8o-NMx" secondAttribute="bottom" constant="7" id="i6f-i3-Gzg"/>
@@ -374,6 +389,7 @@
                         <viewLayoutGuide key="safeArea" id="EaT-UP-Jiz"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="NEn-KB-ZG8" id="iGT-0E-z9g"/>
                         <outlet property="findButton" destination="RJN-8q-EhQ" id="5Nc-Ko-gxq"/>
                         <outlet property="label" destination="oOF-CT-Upx" id="sSI-3Q-vgN"/>
                         <outlet property="locationTextField" destination="TDN-8o-NMx" id="hB3-Dp-vNR"/>

@@ -54,6 +54,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    
+    @IBAction func logOut(_ sender: Any) {
+        UdacityClient.sharedInstance().deleteSession{ (success, error) in
+            DispatchQueue.main.async {
+                if success {
+                    self.dismiss(animated: true)
+                } else if let error = error  {
+                    self.showAlert(title: "Logout failure", error: error)
+                }
+            }
+        }
+        
+    }
+    
+
     // MARK: - Actions
     // Add new Pin to the Map
     @IBAction func addPin(_ sender: Any) {

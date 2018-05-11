@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		239D721120A3D5F70063A5EE /* studentStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239D721020A3D5F70063A5EE /* studentStruct.swift */; };
 		23E5D727205891EC008A58CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E5D726205891EC008A58CA /* AppDelegate.swift */; };
 		23E5D72C205891EC008A58CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23E5D72A205891EC008A58CA /* Main.storyboard */; };
 		23E5D72E205891EC008A58CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23E5D72D205891EC008A58CA /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		239D721020A3D5F70063A5EE /* studentStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = studentStruct.swift; sourceTree = "<group>"; };
 		23E5D723205891EC008A58CA /* ON THE MAP working.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ON THE MAP working.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23E5D726205891EC008A58CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23E5D72B205891EC008A58CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			children = (
 				23E5D76B2058B65A008A58CA /* studentInformationArray.swift */,
 				23E5D76D2058B660008A58CA /* studentInformation.swift */,
+				239D721020A3D5F70063A5EE /* studentStruct.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				23E5D7752058B698008A58CA /* UdacityClient.swift in Sources */,
 				23E5D7632058B426008A58CA /* LoginViewController.swift in Sources */,
 				23E5D7772058B69C008A58CA /* UdacityConstants.swift in Sources */,
+				239D721120A3D5F70063A5EE /* studentStruct.swift in Sources */,
 				23E5D7622058B426008A58CA /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

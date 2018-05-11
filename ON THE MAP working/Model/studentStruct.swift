@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+class studentStruct {
+    var studentsDict : [StudentInformation] = []
+    static let sharedInstance = studentStruct()
+}

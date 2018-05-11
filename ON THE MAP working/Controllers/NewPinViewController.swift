@@ -29,16 +29,17 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var findButton: UIButton!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
     
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
+        activityIndicator.isHidden = true
         locationTextField.delegate = self
-        self.findButton.isHidden = false
-        self.submitButton.isHidden = true
+        findButton.isHidden = false
+        submitButton.isHidden = true
         self.hideKeyboardWhenTappedAround()
     }
     
@@ -62,11 +63,12 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     @IBAction func submitButton(_ sender: Any) {
+        activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         // check if locations textfield isn't empty
         if let locationString = locationTextField.text, locationString != "" {
             // check if URL can be openned
             if let url = URL(string:locationString), UIApplication.shared.canOpenURL(url) {
-
                 // Get first and last names from Udacity
                 UdacityClient.sharedInstance().getUserData(accountKey: UdacityClient.sharedInstance().accountKey!) { (firstName,lastName,error) in
                     if let firstName = firstName, let lastName = lastName {
@@ -78,10 +80,9 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                                 //Refreshing Data
                                 StudentInformationArray.sharedInstance().downloadAndStoreData() { success,error in
                                     DispatchQueue.main.async {
-                                    
                                         if success {
+                                            self.activityIndicator.stopAnimating()
                                             self.dismiss(animated: true, completion: nil)
-                                            
                                         } else if let error = error  {
                                             self.showAlert(title: "Error with posting", error: error)
                                             self.dismiss(animated: true, completion: nil)
@@ -102,6 +103,8 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     
     
     @IBAction func findButton(_ sender: Any) {
+        activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         // Check if location text field isn't empty
         if let locationString = locationTextField.text, locationString != "" {
             mapString = locationString
@@ -115,11 +118,14 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                     self.long = (placemark.location?.coordinate.longitude)!
                     self.mapView.showAnnotations([MKPlacemark(placemark: placemark)], animated: true)
                     // Prepare VC for request of web-site and submitting
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
                     self.findButton.isHidden = true
                     self.submitButton.isHidden = false
                     self.label.text = "Enter your LinkedIn account"
                     self.locationTextField.text = ""
                     self.locationTextField.placeholder = "Enter URL"
+                    
                     
                 } else if error != nil {
                     self.showAlert(title: "Geolocation failed", error: "Enter different location")

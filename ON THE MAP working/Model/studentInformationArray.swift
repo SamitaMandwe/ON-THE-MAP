@@ -9,7 +9,7 @@
 
 import MapKit
 
-// Ckass fir keeping StudentInformation array and annotations
+// Ckass for keeping StudentInformation array and annotations
 class StudentInformationArray {
     var array: [StudentInformation] = [StudentInformation]()
     var annotations:[MKPointAnnotation] = [MKPointAnnotation]()
