@@ -76,25 +76,22 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                         let me = StudentInformation(lat: self.lat, long: self.long, firstName: firstName, lastName: lastName, mediaURL: locationString, mapString: self.mapString, uniqueKey: UdacityClient.sharedInstance().accountKey!)
                         // Post or Put Student Information
                         ParseClient.sharedInstance().postPutStudentLocation(studentInformation: me, httpMethod: self.method, objectId: self.objectId )  { (success, error) in
-                            if success {
-                                //Refreshing Data
-                                StudentInformationArray.sharedInstance().downloadAndStoreData() { success,error in
-                                    DispatchQueue.main.async {
+                            DispatchQueue.main.async {
+                                if success {
+                                    //Refreshing Data
+                                    StudentInformationArray.sharedInstance().downloadAndStoreData() { success,error in
                                         if success {
-                                            self.activityIndicator.stopAnimating()
-                                            self.dismiss(animated: true, completion: nil)
-                                        } else if let error = error  {
-                                            self.showAlert(title: "Error with posting", error: error)
                                             self.dismiss(animated: true, completion: nil)
                                         }
                                     }
                                 }
+                                self.activityIndicator.stopAnimating()
                             }
                         }
                     }
                 }
             } else {
-                showAlert(title: "Url can't be open", error: "Enter valid URL")
+                showAlert(title: "Error with posting", error: "Error")
             }
         } else {
             showAlert(title: "No URL", error: "Enter URL")
@@ -111,7 +108,7 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
             // Geocode the location
             let geocoder = CLGeocoder()
             geocoder.geocodeAddressString(locationString) { (placemarks, error) in
-
+                
                 if let placemark = placemarks?[0] {
                     // Show annotation from geocode
                     self.lat = (placemark.location?.coordinate.latitude)!
@@ -119,7 +116,6 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                     self.mapView.showAnnotations([MKPlacemark(placemark: placemark)], animated: true)
                     // Prepare VC for request of web-site and submitting
                     self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
                     self.findButton.isHidden = true
                     self.submitButton.isHidden = false
                     self.label.text = "Enter your LinkedIn account"

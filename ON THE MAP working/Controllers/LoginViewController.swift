@@ -29,12 +29,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        subscribedToKeyboardNotifications(true)
+        subscribeToKeyboardNotifications()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        subscribedToKeyboardNotifications(false)
+        unsubscribeFromKeyboardNotifications()
     }
     
     @IBAction func loginButton(_ sender: UIButton) {
@@ -81,35 +81,33 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    // MARK: - Keyboard & Notifications setting
-    // Hide keyboard when return pressed
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+    
+    //MARK:  Keyboard Functions for subscribing to keyboard notifications and shifting the view whenever the keyboard
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
     }
-    // Move view up, so both textviews and loginButton are visible
-    @objc func keyboardWillShow(_ notification: Notification) {
-        view.frame.origin.y = (getKeyboardHeight(notification: notification) - (view.frame.height - loginbutton.frame.maxY) ) * -1
+    
+    func unsubscribeFromKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
-    // Move view back
+    
+    @objc func keyboardWillShow(_ notification:Notification) {
+        
+        view.frame.origin.y = getKeyboardHeight(notification) * (-0.5)
+    }
     @objc func keyboardWillHide(_ notification:Notification) {
         view.frame.origin.y = 0
     }
-    
-    func getKeyboardHeight(notification: Notification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.cgRectValue.height
-    }
-    
-    // Adding or removing observers for keyboard notifications
-    func subscribedToKeyboardNotifications(_ state: Bool) {
-        if state {
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)) , name: .UIKeyboardWillHide, object: nil)
+    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
+        
+        let userInfo = notification.userInfo!
+        let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        if passwordTextfield.isFirstResponder {
+            return keyboardSize.cgRectValue.height
         } else {
-            NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-            NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+            return 0
         }
     }
 }
