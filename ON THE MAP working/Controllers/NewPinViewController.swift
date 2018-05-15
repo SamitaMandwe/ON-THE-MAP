@@ -63,12 +63,11 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     @IBAction func submitButton(_ sender: Any) {
-        activityIndicator.isHidden = false
-        self.activityIndicator.startAnimating()
         // check if locations textfield isn't empty
         if let locationString = locationTextField.text, locationString != "" {
             // check if URL can be openned
             if let url = URL(string:locationString), UIApplication.shared.canOpenURL(url) {
+                
                 // Get first and last names from Udacity
                 UdacityClient.sharedInstance().getUserData(accountKey: UdacityClient.sharedInstance().accountKey!) { (firstName,lastName,error) in
                     if let firstName = firstName, let lastName = lastName {
@@ -76,28 +75,35 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                         let me = StudentInformation(lat: self.lat, long: self.long, firstName: firstName, lastName: lastName, mediaURL: locationString, mapString: self.mapString, uniqueKey: UdacityClient.sharedInstance().accountKey!)
                         // Post or Put Student Information
                         ParseClient.sharedInstance().postPutStudentLocation(studentInformation: me, httpMethod: self.method, objectId: self.objectId )  { (success, error) in
-                            DispatchQueue.main.async {
-                                if success {
-                                    //Refreshing Data
-                                    StudentInformationArray.sharedInstance().downloadAndStoreData() { success,error in
+                            if success {
+                                //Refreshing Data
+                                StudentInformationArray.sharedInstance().downloadAndStoreData() { success,error in
+                                    DispatchQueue.main.async {
                                         if success {
-                                            self.dismiss(animated: true, completion: nil)
+                                            //Refreshing Data
+                                            StudentInformationArray.sharedInstance().downloadAndStoreData() { success,error in
+                                                if success {
+                                                    self.dismiss(animated: true, completion: nil)
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            self.activityIndicator.stopAnimating()
+                                            self.showAlert(title: "Error", error: "Posting the location was not possible")
                                         }
                                     }
                                 }
-                                self.activityIndicator.stopAnimating()
                             }
                         }
                     }
                 }
             } else {
-                showAlert(title: "Error with posting", error: "Error")
+                showAlert(title: "Url can't be open", error: "Enter valid URL")
             }
         } else {
             showAlert(title: "No URL", error: "Enter URL")
         }
     }
-    
     
     @IBAction func findButton(_ sender: Any) {
         activityIndicator.isHidden = false
