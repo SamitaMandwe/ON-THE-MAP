@@ -11,7 +11,6 @@ import MapKit
 
 class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
     
-    
     //MARK: - Variables
     var lat = CLLocationDegrees()
     var long = CLLocationDegrees()
@@ -19,10 +18,7 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     var objectId: String? = nil
     var method: String = "POST"
     var annotation: MKAnnotation?
-    
-    
-    
-    
+
     //MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var label: UILabel!
@@ -30,10 +26,7 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    
-    
-    
+  
     //MARK: - Lifecycle
     override func viewDidLoad() {
         activityIndicator.isHidden = true
@@ -42,20 +35,14 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
         submitButton.isHidden = true
         self.hideKeyboardWhenTappedAround()
     }
-    
-    
-    
+ 
     //MARK: -  TextField Delegate
     // Hide keyboard when return pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
-    
-    
-    
-    
+
     //MARK: -  Actions
     
     @IBAction func cancelButton(_ sender: Any) {
@@ -63,11 +50,12 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     @IBAction func submitButton(_ sender: Any) {
+        activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         // check if locations textfield isn't empty
         if let locationString = locationTextField.text, locationString != "" {
             // check if URL can be openned
             if let url = URL(string:locationString), UIApplication.shared.canOpenURL(url) {
-                
                 // Get first and last names from Udacity
                 UdacityClient.sharedInstance().getUserData(accountKey: UdacityClient.sharedInstance().accountKey!) { (firstName,lastName,error) in
                     if let firstName = firstName, let lastName = lastName {
@@ -76,25 +64,21 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                         // Post or Put Student Information
                         ParseClient.sharedInstance().postPutStudentLocation(studentInformation: me, httpMethod: self.method, objectId: self.objectId )  { (success, error) in
                             if success {
-                                //Refreshing Data
-                                StudentInformationArray.sharedInstance().downloadAndStoreData() { success,error in
-                                    DispatchQueue.main.async {
-                                        if success {
-                                            //Refreshing Data
-                                            StudentInformationArray.sharedInstance().downloadAndStoreData() { success,error in
-                                                if success {
-                                                    self.dismiss(animated: true, completion: nil)
-                                                }
+                                DispatchQueue.main.async {
+                                    if success {
+                                        //Refreshing Data
+                                        StudentInformationArray.sharedInstance().downloadAndStoreData() { success,error in
+                                            if success {
+                                                self.dismiss(animated: true, completion: nil)
                                             }
-                                        }
-                                        else {
-                                            self.activityIndicator.stopAnimating()
-                                            self.showAlert(title: "Error", error: "Posting the location was not possible")
                                         }
                                     }
                                 }
                             }
                         }
+                    }
+                    else {
+                        self.showAlert(title: "Error", error: "Posting the location was not possible")
                     }
                 }
             } else {
@@ -122,6 +106,7 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
                     self.mapView.showAnnotations([MKPlacemark(placemark: placemark)], animated: true)
                     // Prepare VC for request of web-site and submitting
                     self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
                     self.findButton.isHidden = true
                     self.submitButton.isHidden = false
                     self.label.text = "Enter your LinkedIn account"
@@ -136,7 +121,5 @@ class NewPinViewController: UIViewController, MKMapViewDelegate, UITextFieldDele
         } else {
             showAlert(title: "No location", error: "Enter location")
         }
-        
-        
     }
 }
